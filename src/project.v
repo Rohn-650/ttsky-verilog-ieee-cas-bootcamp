@@ -40,12 +40,17 @@ module tt_um_pro_clk (
 
     // unused outputs = 0
     assign uo_out[7:1] = 7'b0;
-
-    // =========================
-    // Unused IOs
-    // =========================
     assign uio_out = 8'b0;
     assign uio_oe  = 8'b0;
+
+  // Consume all unused inputs safely
+wire _unused;
+assign _unused = &{
+    ena,
+    ui_in[7:6],
+    uio_in,
+    1'b0
+};
 
 endmodule
 
