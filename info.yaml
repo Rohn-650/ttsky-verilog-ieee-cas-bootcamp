@@ -1,9 +1,9 @@
 # Tiny Tapeout project information
 project:
-  title:        "Half Adder"      # Project title
+  title:        "Programmable Clock Generator"      # Project title
   author:       "Basil & co"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  "performs half adder"      # One line description of what your project does
+  description:  "clock genrator"      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
   clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
 
@@ -23,18 +23,18 @@ project:
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: "first no"
-  ui[1]: "second no"
-  ui[2]: ""
-  ui[3]: ""
-  ui[4]: ""
-  ui[5]: ""
+  ui[0]: "radix 0"
+  ui[1]: "radix 1"
+  ui[2]: "radix 2"
+  ui[3]: "radix 3"
+  ui[4]: "scale 0"
+  ui[5]: "scale 1"
   ui[6]: ""
   ui[7]: ""
 
   # Outputs
-  uo[0]: "sum"
-  uo[1]: "carry"
+  uo[0]: "clock"
+  uo[1]: ""
   uo[2]: ""
   uo[3]: ""
   uo[4]: ""
