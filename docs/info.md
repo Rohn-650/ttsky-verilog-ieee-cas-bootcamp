@@ -59,10 +59,12 @@ All unused IOs are safely tied off.
    - Output updates only at safe boundaries (no glitches)  
    - Output remains a stable square wave  
 
-Example:
-- radix = 1, scale = 00 → ~1 kHz  
-- radix = 5, scale = 11 → higher frequency (MHz range)  
-
+Example Input–Output Mapping
+- radix = 1 (0001), scale = 00 → 1 kHz
+- radix = 7 (0111), scale = 00 → 7 kHz
+- radix = 4 (0100), scale = 01 → 40 kHz
+- radix = 5 (0101), scale = 10 → 500 kHz
+- radix = 3 (0011), scale = 11 → 3 MHz
 ---
 
 ## External hardware
