@@ -1,126 +1,71 @@
-<!---
+## How it works
 
-This file is used to generate your project datasheet. Please fill in the information below and delete any unused
-sections.
+This project implements a programmable clock generator that produces a wide range of output frequencies from a fixed 50 MHz input clock.
 
-You can also include images in this folder and reference them in the markdown. Each image must be less than
-512 kb in size, and the combined size of all images must be less than 1 MB.
--->
+The output frequency is controlled using two inputs:
+- Radix (ui_in[3:0]): selects a value from 1 to 9  
+- Scale (ui_in[5:4]): selects frequency range  
+  - 00 → kHz  
+  - 01 → 10 kHz  
+  - 10 → 100 kHz  
+  - 11 → MHz  
 
-# FlexiClock: Programmable Frequency Generator
+Based on these inputs, a precomputed division factor (N) is selected using combinational logic. This value determines how many input clock cycles are required before toggling the output clock.
 
-## Project Description  
-This project implements a programmable clock generator capable of producing output frequencies across multiple ranges using a fixed input clock. The design allows dynamic control over frequency using two parameters: radix and scale, enabling flexible and precise clock division.
+To ensure glitch-free operation during dynamic changes:
+- The next division value (N_next) is computed continuously  
+- It is updated into a register (N_reg) only when the counter resets (counter == 0)  
 
-The module is optimized for glitch-free operation, ensuring stable output even when configuration inputs change during runtime. This makes it suitable for digital systems requiring configurable timing signals.
+A 16-bit counter increments every clock cycle:
+- When counter reaches N_reg, it resets to zero  
+- At the same time, the output clock toggles  
 
----
+This generates a stable square wave output with frequency:
 
-## How it works  
+f_out = f_in / (2 × N)
 
-The design is based on a counter-driven clock divider with runtime programmability.
+Key features:
+- Glitch-free frequency switching  
+- Fully synchronous design  
+- Safe boundary-based updates  
+- Wide programmable frequency range  
 
-### Core Concept  
-The input clock (50 MHz) is divided using a programmable division factor N. The output clock toggles when a counter reaches N, generating a square wave.
+The TinyTapeout top module maps:
+- ui_in[3:0] → radix  
+- ui_in[5:4] → scale  
+- uo_out[0] → clock output  
 
-### Frequency Control Parameters  
-
-Radix (4-bit input):  
-Range: 1 to 9  
-Acts as a fine-grained frequency selector  
-
-Scale (2-bit input):  
-00 → kHz range  
-01 → 10 kHz range  
-10 → 100 kHz range  
-11 → MHz range  
-
-### Internal Operation  
-
-A combinational block computes the required division factor N_next based on radix and scale. This value is not directly used to avoid glitches.
-
-Instead, it is safely transferred into a register (N_reg) only when the counter resets. The counter increments every clock cycle:
-
-- When counter == N_reg, the output toggles  
-- Otherwise, the counter increments  
-
-This ensures a stable and symmetric output waveform.
-
-### Glitch-Free Switching  
-
-Parameter updates occur only when the counter resets (counter = 0). This prevents frequency glitches, duty cycle distortion, and instability.
+All unused IOs are safely tied off.
 
 ---
 
-## How to test  
+## How to test
 
-1. Apply a 50 MHz clock input  
-2. Assert reset (rst_n = 0), then release (rst_n = 1)  
-3. Provide different combinations of radix (1–9) and scale (00–11)  
-4. Observe clk_out  
+1. Apply clock and reset:
+   - Provide a 50 MHz clock to clk  
+   - Set rst_n = 0 to reset  
+   - Set rst_n = 1 to start  
 
-Expected behavior:  
-- Output frequency changes based on inputs  
-- No glitches during transitions  
-- Output remains a stable square wave  
+2. Set control inputs:
+   - Choose radix (1–9) using ui_in[3:0]  
+   - Choose scale using ui_in[5:4]  
 
-Example cases:
+3. Observe output:
+   - Output clock is available on uo_out[0]  
+   - Measure using waveform viewer or hardware tools  
 
-Scale 00, Radix 1 → ~1 kHz  
-Scale 00, Radix 5 → ~5 kHz  
-Scale 01, Radix 2 → ~20 kHz  
-Scale 10, Radix 4 → ~400 kHz  
-Scale 11, Radix 1 → ~1 MHz  
+4. Verify behavior:
+   - Changing radix or scale changes frequency  
+   - Output updates only at safe boundaries (no glitches)  
+   - Output remains a stable square wave  
 
----
-
-## Pin Mapping (Tiny Tapeout)
-
-Inputs (ui_in):  
-[3:0] → radix (1–9)  
-[5:4] → scale  
-[7:6] → unused  
-
-Outputs (uo_out):  
-[0] → clk_out  
-[7:1] → unused (0)  
-
-Bidirectional (uio):  
-Not used  
-
-Other signals:  
-clk → system clock (50 MHz)  
-rst_n → active-low reset  
-ena → internally consumed  
+Example:
+- radix = 1, scale = 00 → ~1 kHz  
+- radix = 5, scale = 11 → higher frequency (MHz range)  
 
 ---
 
-## Architecture Overview  
+## External hardware
 
-- Combinational logic computes N_next  
-- Register stores stable value N_reg  
-- Counter performs clock division  
-- Output toggles to generate clock  
+No external hardware is required.
 
----
-
-## Key Features  
-
-- Programmable frequency generation  
-- Multi-scale operation (kHz to MHz)  
-- Glitch-free dynamic reconfiguration  
-- Efficient hardware design  
-- Fully synchronous implementation  
-- Tiny Tapeout compatible  
-
----
-
-## External hardware  
-
-Not required  
-
----
-
-## Conclusion  
-
-This project demonstrates a robust and scalable clock generation architecture suitable for FPGA and ASIC designs. Its glitch-free switching and flexible control make it reliable for timing-critical applications.
