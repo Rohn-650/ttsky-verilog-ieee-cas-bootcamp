@@ -1,7 +1,7 @@
 # Tiny Tapeout project information
 project:
   title:        "Programmable Clock Generator"      # Project title
-  author:       "Basil & co"      # Your name
+  author:       "Basil Mathews Biju, Rohn Eldho and Adithyan A"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   description:  "clock genrator"      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
