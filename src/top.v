@@ -104,7 +104,7 @@ module tt_um_prog_clk (
             end
 
             // Counter operation
-            if (counter == N_reg) begin
+            if (counter == (N_reg-1)) begin
                 counter <= 0;
                 clk_out <= ~clk_out;
             end else begin
