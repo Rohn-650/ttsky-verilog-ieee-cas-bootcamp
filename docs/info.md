@@ -66,21 +66,15 @@ All unused IOs are safely tied off.
    - Changing radix or scale updates the output frequency
    - The update takes effect only at the next half-period boundary (no glitches)
    - Output remains a stable 50% duty-cycle square wave at all times
+     
+## Frequency Accuracy Verification
 
-### Example Input–Output Mapping
+Vivado simulation results confirming that the generated output frequencies closely match the expected values across all radix–scale combinations.
+     
+<img width="743" height="730" alt="image" src="https://github.com/user-attachments/assets/cafde272-c9d1-447d-b6fa-6b1da6e9c451" />
 
-| radix | scale | ui_in[5:0] | f_out    |
-|-------|-------|------------|----------|
-| 1     | 00    | 000001     | 100 Hz   |
-| 5     | 00    | 000101     | 500 Hz   |
-| 9     | 00    | 001001     | 900 Hz   |
-| 1     | 01    | 010001     | 1 kHz    |
-| 7     | 01    | 010111     | 7 kHz    |
-| 4     | 10    | 100100     | 40 kHz   |
-| 5     | 10    | 100101     | 50 kHz   |
-| 1     | 11    | 110001     | 100 kHz  |
-| 3     | 11    | 110011     | 300 kHz  |
-| 6     | 11    | 110110     | 600 kHz  |
+The measured frequencies closely match expected values, with errors under 1%, confirming accurate and stable operation.
+
 
 ---
 
