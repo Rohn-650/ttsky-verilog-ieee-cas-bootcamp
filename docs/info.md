@@ -71,7 +71,20 @@ All unused IOs are safely tied off.
 
 Vivado simulation results confirming that the generated output frequencies closely match the expected values across all radix–scale combinations.
      
-<img width="743" height="730" alt="image" src="https://github.com/user-attachments/assets/cafde272-c9d1-447d-b6fa-6b1da6e9c451" />
+All 36 radix–scale combinations were verified using simulation at 50 MHz input clock.
+
+- **Total tests:** 36  
+- **Passed:** 36  
+- **Failed:** 0  
+
+### Error Summary by Scale
+
+| Scale | Range        | Max Error |
+|------|-------------|----------|
+| 00   | 100–900 Hz  | ~0.01%   |
+| 01   | 1–9 kHz     | ~0.01%   |
+| 10   | 10–90 kHz   | ~0.16%   |
+| 11   | 100–900 kHz | ~0.79%   |
 
 The measured frequencies closely match expected values, with errors under 1%, confirming accurate and stable operation.
 
