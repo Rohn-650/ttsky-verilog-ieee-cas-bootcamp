@@ -79,14 +79,12 @@ All 36 radix–scale combinations were verified using simulation at 50 MHz input
 
 ### Error Summary by Scale
 
-
-| Scale | Range        | Max Error |
-|-------|-------------|-----------|
-| 00    | 100–900 Hz  | ~0.01%    |
-| 01    | 1–9 kHz     | ~0.01%    |
-| 10    | 10–90 kHz   | ~0.16%    |
-| 11    | 100–900 kHz | ~0.79%    |
-
+- (Scale : Range → Max Error)
+- 00 : 100–900 Hz → ~0.01%
+- 01 : 1–9 kHz → ~0.01%
+- 10 : 10–90 kHz → ~0.16%
+- 11 : 100–900 kHz → ~0.79%
+  
 The measured frequencies closely match expected values, with errors under 1%, confirming accurate and stable operation.
 
 
